@@ -43,16 +43,77 @@ const data = {
 //     .then(data => console.log(data))
 //     .catch(error => console.log(error));
 
+
+
 //YARGS
 
-const argv = require("yargs").argv;
+// const argv = require("yargs").argv;
+
+// function invokeAction({ action, id, name, email, phone }) {
+//   switch (action) {
+//     case "list":
+//       const contacts = contactsOperations.listContacts();
+//       contacts
+//         .then((data) => console.log(data))
+//         .catch((error) => console.log(error));
+//       break;
+
+//     case "get":
+//       const contactGet = contactsOperations.getContactById(id);
+//       contactGet
+//         .then((data) => console.log(data))
+//         .catch((error) => console.log(error));
+//       break;
+
+//     case "add":
+//       const newContact = {
+//         name,
+//         email,
+//         phone,
+//       };
+//       const contactAdd = contactsOperations.addContact(newContact);
+//       contactAdd
+//         .then((data) => console.log(data))
+//         .catch((error) => console.log(error));
+//       break;
+
+//     case "remove":
+//       const contactRemove = contactsOperations.removeContact(id);
+//       contactRemove
+//         .then((data) => console.log(data))
+//         .catch((error) => console.log(error));
+//       break;
+
+//     default:
+//       console.warn("\x1B[31m Unknown action type!");
+//   }
+// }
+
+// invokeAction(argv);
+
+
+
+//COMMANDER
+
+const { Command } = require("commander");
+const program = new Command();
+program
+  .option("-a, --action <type>", "choose action")
+  .option("-i, --id <type>", "user id")
+  .option("-n, --name <type>", "user name")
+  .option("-e, --email <type>", "user email")
+  .option("-p, --phone <type>", "user phone");
+
+program.parse(process.argv);
+
+const argv = program.opts();
 
 function invokeAction({ action, id, name, email, phone }) {
   switch (action) {
     case "list":
       const contacts = contactsOperations.listContacts();
       contacts
-        .then((data) => console.log(data))
+        .then((data) => console.table(data))
         .catch((error) => console.log(error));
       break;
 
