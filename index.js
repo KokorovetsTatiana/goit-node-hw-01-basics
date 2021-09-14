@@ -54,7 +54,7 @@ const data = {
 //     case "list":
 //       const contacts = contactsOperations.listContacts();
 //       contacts
-//         .then((data) => console.log(data))
+//         .then((data) => console.table(data))
 //         .catch((error) => console.log(error));
 //       break;
 
