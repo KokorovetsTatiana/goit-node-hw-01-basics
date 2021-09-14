@@ -20,11 +20,12 @@ const workWithContacts = async(type = "listContacts", contactId, data) => {
 
 const contactId = 2;
 const data = {
-    "id": 2,
     "name": "Chaim Lewis",
     "email": "dui.in@egetlacus.ca",
     "phone": "(294) 840-6685"
 }
+
+//function check
 
 // workWithContacts("listContacts")
 //     .then(data => console.log(data))
@@ -38,7 +39,52 @@ const data = {
 //     .then(data => console.log(data))
 //     .catch(error => console.log(error));
 
-workWithContacts("addContact", "", data)
-    .then(data => console.log(data))
-    .catch(error => console.log(error));
+// workWithContacts("addContact", "", data)
+//     .then(data => console.log(data))
+//     .catch(error => console.log(error));
 
+//YARGS
+
+const argv = require("yargs").argv;
+
+function invokeAction({ action, id, name, email, phone }) {
+  switch (action) {
+    case "list":
+      const contacts = contactsOperations.listContacts();
+      contacts
+        .then((data) => console.log(data))
+        .catch((error) => console.log(error));
+      break;
+
+    case "get":
+      const contactGet = contactsOperations.getContactById(id);
+      contactGet
+        .then((data) => console.log(data))
+        .catch((error) => console.log(error));
+      break;
+
+    case "add":
+      const newContact = {
+        name,
+        email,
+        phone,
+      };
+      const contactAdd = contactsOperations.addContact(newContact);
+      contactAdd
+        .then((data) => console.log(data))
+        .catch((error) => console.log(error));
+      break;
+
+    case "remove":
+      const contactRemove = contactsOperations.removeContact(id);
+      contactRemove
+        .then((data) => console.log(data))
+        .catch((error) => console.log(error));
+      break;
+
+    default:
+      console.warn("\x1B[31m Unknown action type!");
+  }
+}
+
+invokeAction(argv);
